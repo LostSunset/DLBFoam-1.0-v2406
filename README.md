@@ -1,6 +1,10 @@
 # Adapt to OpenFOAM V2406
 ![OpenFOAM v2406](https://img.shields.io/badge/OpenFOAM-v2406-brightgreen)
 
+The main change is as follow:
+* add library path thermophysicalProperties/lnInclude
+* modify a line of code in unittest/catch.hpp
+
 # DLBFoam: Dynamic load balancing for fast reactive simulations
 
 DLBFoam is an open-source library for OpenFOAM. It introduces dynamic load balancing and a zonal reference mapping model 
