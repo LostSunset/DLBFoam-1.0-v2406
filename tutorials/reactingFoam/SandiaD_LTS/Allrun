@@ -20,7 +20,7 @@ then
     # Test without chemistry
     foamDictionary constant/chemistryProperties -entry chemistry -set off
 
-    runApplication $(getApplication)
+    runParallel $(getApplication)
 
 else
     # Run without chemistry until 1500 to let the flow field develop
@@ -30,7 +30,7 @@ else
 
     foamDictionary constant/chemistryProperties -entry chemistry -set off
 
-    runApplication $(getApplication)
+    runParallel $(getApplication)
 
     # Run with chemistry until flame reaches its full size
     foamDictionary system/controlDict -entry writeInterval -set 100
@@ -39,7 +39,9 @@ else
 
     foamDictionary constant/chemistryProperties -entry chemistry -set on
 
-    runApplication -o $(getApplication)
+    runParallel -o $(getApplication)
+
+    runApplication reconstructionPar
 
 fi
 
