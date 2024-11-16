@@ -8,7 +8,7 @@
 License
     This file is part of DLBFoam library, derived from OpenFOAM.
 
-    https://github.com/blttkgl/DLBFoam
+    https://github.com/Aalto-CFD/DLBFoam
 
     OpenFOAM is free software: you can redistribute it and/or modify it
     under the terms of the GNU General Public License as published by
@@ -132,7 +132,7 @@ public:
     // Constructors
 
         //- Construct from thermo
-        LoadBalancedChemistryModel(const ReactionThermo& thermo);
+        LoadBalancedChemistryModel(ReactionThermo& thermo);
 
         //- Disallow default bitwise copy construction
         LoadBalancedChemistryModel(const LoadBalancedChemistryModel&);
@@ -161,13 +161,13 @@ public:
         // ODE functions (overriding abstract functions in ODE.H)
         virtual void solve
         (
-            scalar&      p,
-            scalar&      T,
-            scalarField& c,
-            const label  li,
-            scalar&      deltaT,
-            scalar&      subDeltaT
+            scalarField &c,
+            scalar& T,
+            scalar& p,
+            scalar& deltaT,
+            scalar& subDeltaT
         ) const = 0;
+
 
         //- Create and return a log file of the given name
         inline autoPtr<OFstream> logFile(const word& name) const;

@@ -8,7 +8,7 @@
 License
     This file is part of DLBFoam library, derived from OpenFOAM.
 
-    https://github.com/blttkgl/DLBFoam
+    https://github.com/Aalto-CFD/DLBFoam
 
     OpenFOAM is free software: you can redistribute it and/or modify it
     under the terms of the GNU General Public License as published by
@@ -85,7 +85,6 @@ SourceFiles
 #include "Switch.H"
 #include "runTimeSelectionTables.H"
 #include "scalarField.H"
-#include "ChemistryProblem.H"
 
 // Mixture fraction headers
 #include "atomicWeights.H"

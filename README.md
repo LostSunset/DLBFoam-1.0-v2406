@@ -1,11 +1,5 @@
-# Adapt to OpenFOAM V2406
-![OpenFOAM v2406](https://img.shields.io/badge/OpenFOAM-v2406-brightgreen)
-
-The main change is as follow:
-* add library path thermophysicalProperties/lnInclude
-* modify a line of code in unittest/catch.hpp
-
 # DLBFoam: Dynamic load balancing for fast reactive simulations
+![OpenFOAM v2006](https://img.shields.io/badge/OpenFOAM-v2006-brightgreen)
 
 DLBFoam is an open-source library for OpenFOAM. It introduces dynamic load balancing and a zonal reference mapping model 
 for fast chemistry calculation in parallel simulations.
@@ -115,41 +109,10 @@ abs(T<sub>cell</sub>-T<sub>ref</sub>)<deltaT.
 
 For a working example, check the tutorials given in tutorials folder.
 
-## Directory structure
-```
-├── src
-└── thermophysicalModels
-│    └── chemistryModel
-│        ├── chemistryModel
-│        │   └── loadBalancedChemistryModel
-│        │       ├── LoadBalancedChemistryModel    // Main chemistry class
-│        ├── loadBalancing
-│        │   ├── algorithms_DLB                    // Some useful algorithms used
-│        │   ├── ChemistryLoad                     // Chemistry load object
-│        │   ├── ChemistryProblem                  // Chemistry problem object
-│        │   ├── ChemistrySolution                 // Chemistry solution object
-│        │   ├── LoadBalancerBase                  // Load balancer base class
-│        │   ├── LoadBalancer                      // Load balancer implementation class
-│        │   ├── RecvBuffer                        // Receive MPI buffer object
-│        │   ├── runtime_assert                    // Assert functions for debugging
-│        │   ├── SendBuffer                        // Send MPI buffer object
-│        └── refMapping
-│            ├── mixtureFraction                   // Mixture fraction implementation
-│            ├── mixtureFractionRefMapper          // Reference mapper implementation class
-│
-├── tutorials                                      // Tutorials
-└── unittests                                      // Unit tests to check if compilation is successful
-```
-
-## Contributors
-- Bulut Tekgül (bulut.tekgul@aalto.fi)
-- Petteri Peltonen (petteri.peltonen@aalto.fi)
-- Heikki Kahila (heikki.kahila@wartsila.com)
-
 ## Getting help and reporting bugs
 
 Please submit a GitHub issue if you found a bug in the program. If you need help with the software or have further questions,
-contact the contributors.
+contact bulut.tekgul@aalto.fi.
 
 ## Citation
 
@@ -158,4 +121,6 @@ If you use our model, please cite the publication describing its implementation 
 ## References
 
 <a id="1">[1]</a> 
-Tekgul, Peltonen, Kahila, Kaario, Vuorinen (2021). [DLBFoam: An open-source dynamic load balancing model for fast reacting flow simulations in OpenFOAM](https://doi.org/10.1016/j.cpc.2021.108073)
+Tekgul, Peltonen, Kahila, Kaario, Vuorinen (2020). [DLBFoam: An open-source dynamic load balancing model for fast reacting flow simulations in OpenFOAM](https://arxiv.org/abs/2011.07978)
+
+

@@ -1,0 +1,3 @@
+ODESolvers/seulex_LAPACK/seulex_LAPACK.C
+
+LIB = $(FOAM_USER_LIBBIN)/libODE_DLB

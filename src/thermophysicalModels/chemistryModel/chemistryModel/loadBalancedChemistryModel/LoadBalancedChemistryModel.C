@@ -8,7 +8,7 @@
 License
     This file is part of DLBFoam library, derived from OpenFOAM.
 
-    https://github.com/blttkgl/DLBFoam
+    https://github.com/Aalto-CFD/DLBFoam
 
     OpenFOAM is free software: you can redistribute it and/or modify it
     under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ License
 
 template <class ReactionThermo, class ThermoType>
 Foam::LoadBalancedChemistryModel<ReactionThermo, ThermoType>::
-    LoadBalancedChemistryModel(const ReactionThermo& thermo)
+    LoadBalancedChemistryModel(ReactionThermo& thermo)
     : 
         StandardChemistryModel<ReactionThermo, ThermoType>(thermo),
         balancer_(createBalancer()), 
@@ -47,7 +47,8 @@ Foam::LoadBalancedChemistryModel<ReactionThermo, ThermoType>::
                 IOobject::AUTO_WRITE
             ),
             this->mesh(),
-            scalar(0.0)
+            scalar(0),
+            "zeroGradient"
         ),
         refMap_
         (
@@ -60,7 +61,8 @@ Foam::LoadBalancedChemistryModel<ReactionThermo, ThermoType>::
                 IOobject::AUTO_WRITE
             ),
             this->mesh(),
-            scalar(0.0)
+            scalar(0.0),
+            "zeroGradient"
         )
     {
         if(balancer_.log())
@@ -151,7 +153,7 @@ Foam::scalar Foam::LoadBalancedChemistryModel<ReactionThermo, ThermoType>::solve
 
     if(!this->chemistry_)
     {
-        return great;
+        return GREAT;
     }
 
     timer.timeIncrement();
@@ -219,20 +221,18 @@ void Foam::LoadBalancedChemistryModel<ReactionThermo, ThermoType>::solveSingle
     clockTime time;
     time.timeIncrement();
 
-    // Define a const label to pass as the cell index placeholder
-    const label arbitrary = 0;
 
     // Calculate the chemical source terms
-    while(timeLeft > small)
+    while(timeLeft > SMALL)
     {
         scalar dt = timeLeft;
         this->solve(
-            problem.pi,
-            problem.Ti,
             problem.c,
-            arbitrary,
+            problem.Ti,
+            problem.pi,
             dt,
             problem.deltaTChem);
+
         timeLeft -= dt;
     }
 
@@ -254,7 +254,7 @@ Foam::LoadBalancedChemistryModel<ReactionThermo, ThermoType>::updateReactionRate
     const RecvBuffer<ChemistrySolution>& solutions
 )
 {
-    scalar deltaTMin = great;
+    scalar deltaTMin = GREAT;
 
     for(const auto& array : solutions)
     {
@@ -264,7 +264,7 @@ Foam::LoadBalancedChemistryModel<ReactionThermo, ThermoType>::updateReactionRate
             for(label j = 0; j < this->nSpecie_; j++)
             {
                 this->RR_[j][solution.cellid] =
-                    solution.c_increment[j] * this->specieThermos_[j].W();
+                    solution.c_increment[j] * this->specieThermo_[j].W();
             }
 
             deltaTMin = min(solution.deltaTChem, deltaTMin);
@@ -371,7 +371,7 @@ Foam::LoadBalancedChemistryModel<ReactionThermo, ThermoType>::getProblems
         {
             for(label i = 0; i < this->nSpecie_; i++)
             {
-                concentration[i] = rho[celli] * this->Y_[i][celli] / this->specieThermos_[i].W();
+                concentration[i] = rho[celli] * this->Y_[i][celli] / this->specieThermo_[i].W();
                 massFraction[i] = this->Y_[i][celli];
             }
             
@@ -468,7 +468,7 @@ void Foam::LoadBalancedChemistryModel<ReactionThermo, ThermoType>::updateReactio
 {
     for(label j = 0; j < this->nSpecie_; j++)
     {
-        this->RR_[j][i] = solution.c_increment[j] * this->specieThermos_[j].W();
+        this->RR_[j][i] = solution.c_increment[j] * this->specieThermo_[j].W();
     }
     this->deltaTChem_[i] = min(solution.deltaTChem, this->deltaTChemMax_);
 }
