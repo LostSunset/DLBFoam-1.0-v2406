@@ -2,7 +2,7 @@
 ![OpenFOAM v2006](https://img.shields.io/badge/OpenFOAM-v2006-brightgreen)
 ![OpenFOAM v2406](https://img.shields.io/badge/OpenFOAM-v2406-brightgreen)
 
-Forked version. Corrected some make issues. Now it shall works on openfoam 2024 with only git clone and allwmake.
+> Forked version. Corrected some make issues. Now it shall works on openfoam 2024 with only git clone and allwmake.
 
 DLBFoam is an open-source library for OpenFOAM. It introduces dynamic load balancing and a zonal reference mapping model 
 for fast chemistry calculation in parallel simulations.
